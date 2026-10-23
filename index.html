@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جهان گیم - مرجع کامل بازی‌های ویدیویی</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* نوار ناوبری */
+        .navbar {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00ff88;
+        }
+
+        /* هدر اصلی */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .hero-content h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .hero-content p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            color: black;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* بخش‌های مختلف */
+        .section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: #00ff88;
+        }
+
+        /* کارت بازی‌ها */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+        }
+
+        .game-content {
+            padding: 20px;
+        }
+
+        .game-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #00ff88;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        /* اخبار */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .news-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #00ff88;
+        }
+
+        .news-date {
+            color: #00ccff;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        /* سیستم رتبه‌بندی */
+        .rating {
+            color: #ffd700;
+            margin: 10px 0;
+        }
+
+        .stars {
+            direction: ltr;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .star {
+            font-size: 24px;
+            cursor: pointer;
+            color: #555;
+            transition: color 0.2s;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #ffd700;
+        }
+
+        /* دکمه‌ها */
+        .btn {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+            border: 1px solid #00ff88;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background: #00ff88;
+            color: black;
+        }
+
+        /* گالری */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* ویدیو */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #333, #555);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2em;
+        }
+
+        /* نظرات */
+        .comments-section {
+            margin-top: 30px;
+        }
+
+        .comment-form {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #00ff88;
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+
+        .comments-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .comment {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-right: 3px solid #00ff88;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #00ccff;
+        }
+
+        /* تماس با ما */
+        .contact-info {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .phone-number {
+            font-size: 1.5em;
+            color: #00ff88;
+            margin: 20px 0;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        /* مودال برای عکس‌ها */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            margin-top: 5%;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        /* فوتر */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .social-links {
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.5em;
+            text-decoration: none;
+        }
+
+        /* ریسپانسیو */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 2em;
+            }
+            
+            .section-title {
+                font-size: 2em;
+            }
+            
+            .video-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- نوار ناوبری -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🎮 جهان گیم</div>
+            <div class="nav-links">
+                <a href="#home">خانه</a>
+                <a href="#games">بازی‌ها</a>
+                <a href="#news">اخبار</a>
+                <a href="#reviews">نقد و بررسی</a>
+                <a href="#gallery">گالری</a>
+                <a href="#contact">تماس با ما</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- هدر اصلی -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>به جهان گیم خوش آمدید! 🚀</h1>
+            <p>مرجع کامل اطلاعات بازی‌های ویدیویی، اخبار روز، نقد و بررسی، و راهنمای بازی</p>
+            <button class="cta-button" onclick="scrollToSection('games')">مشاهده بازی‌ها</button>
+        </div>
+    </section>
+
+    <!-- بخش بازی‌های محبوب -->
+    <section class="section" id="games">
+        <h2 class="section-title">🎯 بازی‌های محبوب</h2>
+        <div class="games-grid">
+            <!-- کارت بازی ۱ -->
+            <div class="game-card">
+                <div class="game-image" style="background-image: url('https://images.unsplash.com/photo-1593305841991-05c297ba4575?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="game-content">
+                    <h3 class="game-title">God of War: Ragnarok</h3>
+                    <div class="game-info">
+                        <span>سونی</span>
+                        <span>Action-RPG</span>
+                        <span>2022</span>
+                    </div>
+                    <div class="rating">★★★★★</div>
+                    <p>ادامه ماجراجویی کریتوس و پسرش در اساطیر نوردیک. گرافیک خیره کننده و داستان عمیق.</p>
+                    <div class="gallery">
+                        <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" onclick="openModal(this)">
+                    </div>
+                    <button class="btn" onclick="showGameDetails('God of War')">مشاهده جزئیات</button>
+                    <button class="btn" onclick="scrollToSection('reviews')">نظردهی</button>
+                </div>
+            </div>
+
+            <!-- کارت بازی ۲ -->
+            <div class="game-card">
+                <div class="game-image" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="game-content">
+                    <h3 class="game-title">Cyberpunk 2077</h3>
+                    <div class="game-info">
+                        <span>CD Projekt</span>
+                        <span>RPG</span>
+                        <span>2020</span>
+                    </div>
+                    <div class="rating">★★★★☆</div>
+                    <p>شهری آینده‌نگرانه با داستان‌های عمیق و گیم‌پلی متنوع. جهان باز وسیع با شخصیت‌پردازی عالی.</p>
+                    <div class="gallery">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" onclick="openModal(this)">
+                    </div>
+                    <button class="btn" onclick="showGameDetails('Cyberpunk')">مشاهده جزئیات</button>
+                    <button class="btn" onclick="scrollToSection('reviews')">نظردهی</button>
+                </div>
+            </div>
+
+            <!-- کارت بازی ۳ -->
+            <div class="game-card">
+                <div class="game-image" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="game-content">
+                    <h3 class="game-title">Elden Ring</h3>
+                    <div class="game-info">
+                        <span>FromSoftware</span>
+                        <span>Action-RPG</span>
+                        <span>2022</span>
+                    </div>
+                    <div class="rating">★★★★★</div>
+                    <p>جهان باز وسیع با مبارزات چالش‌برانگیز و داستان عمیق. طراحی سطح عالی و گیم‌پلی منعطف.</p>
+                    <div class="gallery">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" onclick="openModal(this)">
+                    </div>
+                    <button class="btn" onclick="showGameDetails('Elden Ring')">مشاهده جزئیات</button>
+                    <button class="btn" onclick="scrollToSection('reviews')">نظردهی</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش ویدیوهای گیم پلی -->
+    <section class="section">
+        <h2 class="section-title">🎥 ویدیوهای گیم پلی</h2>
+        <div class="video-container">
+            <div class="video-placeholder">
+                🎮 برای مشاهده ویدیوهای گیم پلی با ما تماس بگیرید
+                <br>
+                <span class="phone-number">09011433940</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش اخبار -->
+    <section class="section" id="news">
+        <h2 class="section-title">📰 آخرین اخبار گیمینگ</h2>
+        <div class="news-grid">
+            <div class="news-card">
+                <div class="news-date">۲۵ دی ۱۴۰۲</div>
+                <h3>انتشار آپدیت جدید GTA VI</h3>
+                <p>راکستار گیمز از آپدیت جدید GTA VI با محتوای چندنفره رونمایی کرد...</p>
+                <button class="btn">ادامه خبر</button>
+            </div>
+            <div class="news-card">
+                <div class="news-date">۲۳ دی ۱۴۰۲</div>
+                <h3>کنسول جدید سونی معرفی شد</h3>
+                <p>سونی از کنسول نسل بعدی خود با قابلیت Ray Tracing واقعی رونمایی کرد...</p>
+                <button class="btn">ادامه خبر</button>
+            </div>
+            <div class="news-card">
+                <div class="news-date">۲۰ دی ۱۴۰۲</div>
+                <h3>تخفیف‌های استیم زمستانه</h3>
+                <p>فروش زمستانه استیم با تخفیف‌های تا ۹۰٪ روی بازی‌های محبوب آغاز شد...</p>
+                <button class="btn">ادامه خبر</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش نقد و بررسی و نظردهی -->
+    <section class="section" id="reviews">
+        <h2 class="section-title">⭐ نقد و بررسی و نظردهی</h2>
+        
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-content">
+                    <h3 class="game-title">بررسی تخصصی God of War</h3>
+                    <div class="rating">امتیاز: ۹.۵/۱۰</div>
+                    <p><strong>نقاط قوت:</strong><br>• گرافیک خیره کننده<br>• گیم‌پلی روان<br>• داستان عمیق</p>
+                    <p><strong>نقاط ضعف:</strong><br>• طول بازی کمی کوتاه</p>
+                    <button class="btn">مطالعه کامل بررسی</button>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <div class="game-content">
+                    <h3 class="game-title">سیستم نظردهی</h3>
+                    <div class="stars" id="ratingStars">
+                        <span class="star" onclick="rateGame(1)">★</span>
+                        <span class="star" onclick="rateGame(2)">★</span>
+                        <span class="star" onclick="rateGame(3)">★</span>
+                        <span class="star" onclick="rateGame(4)">★</span>
+                        <span class="star" onclick="rateGame(5)">★</span>
+                    </div>
+                    <div class="comment-form">
+                        <textarea placeholder="نظر خود را درباره بازی بنویسید..."></textarea>
+                        <button class="btn" onclick="submitComment()">ثبت نظر</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="comments-section">
+            <h3 style="text-align: center; margin: 30px 0;">نظرات کاربران</h3>
+            <div class="comments-list" id="commentsList">
+                <!-- نظرات dynamically اضافه می‌شوند -->
+            </div>
+        </div>
+    </section>
+
+    <!-- گالری تصاویر -->
+    <section class="section" id="gallery">
+        <h2 class="section-title">📸 گالری تصاویر</h2>
+        <div class="gallery">
+            <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" onclick="openModal(this)">
+            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" onclick="openModal(this)">
+            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" onclick="openModal(this)">
+            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" onclick="openModal(this)">
+            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" onclick="openModal(this)">
+            <img src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" onclick="openModal(this)">
+        </div>
+    </section>
+
+    <!-- تماس با ما -->
+    <section class="section" id="contact">
+        <h2 class="section-title">📞 تماس با ما</h2>
+        <div class="contact-info">
+            <p>برای اطلاعات بیشتر، سفارش ویدیوهای گیم پلی و همکاری با ما:</p>
+            <div class="phone-number">۰۹۰۱۱۴۳۳۹۴۰</div>
+            <p>همیشه در خدمت شما هستیم! 🎮</p>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <button class="btn" onclick="callNumber()">تماس تلفنی</button>
+            <button class="btn" onclick="sendSMS()">ارسال پیامک</button>
+        </div>
+    </section>
+
+    <!-- مودال برای نمایش عکس بزرگ -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <!-- فوتر -->
+    <footer>
+        <div class="logo" style="margin-bottom: 20px;">🎮 جهان گیم</div>
+        <div class="contact-info">
+            <div class="phone-number">۰۹۰۱۱۴۳۳۹۴۰</div>
+        </div>
+        <div class="social-links">
+            <a href="#">📘</a>
+            <a href="#">📷</a>
+            <a href="#">🐦</a>
+            <a href="#">📹</a>
+        </div>
+        <p>© ۲۰۲۴ جهان گیم - تمام حقوق محفوظ است</p>
+    </footer>
+
+    <script>
+        // اسکرول نرم به بخش‌ها
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // نمایش اطلاعات کامل بازی
+        function showGameDetails(gameName) {
+            const details = {
+                'God of War': `
+                    <h3>God of War: Ragnarok - اطلاعات کامل</h3>
+                    <p><strong>ژانر:</strong> Action-RPG</p>
+                    <p><strong>سازنده:</strong> Santa Monica Studio</p>
+                    <p><strong>ناشر:</strong> سونی</p>
+                    <p><strong>تاریخ انتشار:</strong> ۲۰۲۲</p>
+                    <p><strong>پلتفرم:</strong> PS4, PS5</p>
+                    <p><strong>امتیاز متاکریتیک:</strong> ۹۴/۱۰۰</p>
+                    <p><strong>ویژگی‌ها:</strong> داستان عمیق، گرافیک نسل جدید، گیم‌پلی بهبود یافته</p>
+                `,
+                'Cyberpunk': `
+                    <h3>Cyberpunk 2077 - اطلاعات کامل</h3>
+                    <p><strong>ژانر:</strong> RPG, Open World</p>
+                    <p><strong>سازنده:</strong> CD Projekt Red</p>
+                    <p><strong>ناشر:</strong> CD Projekt</p>
+                    <p><strong>تاریخ انتشار:</strong> ۲۰۲۰</p>
+                    <p><strong>پلتفرم:</strong> PC, PS4, PS5, Xbox</p>
+                    <p><strong>امتیاز متاکریتیک:</strong> ۸۶/۱۰۰</p>
+                    <p><strong>ویژگی‌ها:</strong> جهان باز وسیع، شخصیت‌سازی عمیق، داستان‌های متعدد</p>
+                `,
+                'Elden Ring': `
+                    <h3>Elden Ring - اطلاعات کامل</h3>
+                    <p><strong>ژانر:</strong> Action-RPG</p>
+                    <p><strong>سازنده:</strong> FromSoftware</p>
+                    <p><strong>ناشر:</strong> Bandai Namco</p>
+                    <p><strong>تاریخ انتشار:</strong> ۲۰۲۲</p>
+                    <p><strong>پلتفرم:</strong> PC, PS4, PS5, Xbox</p>
+                    <p><strong>امتیاز متاکریتیک:</strong> ۹۶/۱۰۰</p>
+                    <p><strong>ویژگی‌ها:</strong> جهان باز عظیم، مبارزات چالش‌برانگیز، طراحی سطح عالی</p>
+                `
+            };
+            
+            alert(details[gameName]);
+        }
+
+        // سیستم امتیازدهی
+        let currentRating = 0;
+        function rateGame(rating) {
+            currentRating = rating;
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // ثبت نظر
+        function submitComment() {
+            const textarea = document.querySelector('.comment-form textarea');
+            const comment = textarea.value.trim();
+            
+            if (comment === '') {
+                alert('لطفا نظر خود را بنویسید!');
+                return;
+            }
+            
+            if (currentRating === 0) {
+                alert('لطفا به بازی امتیاز دهید!');
+                return;
+            }
+            
+            const commentsList = document.getElementById('commentsList');
+            const newComment = document.createElement('div');
+            newComment.className = 'comment';
+            newComment.innerHTML = `
+                <div class="comment-header">
+                    <span>کاربر ناشناس</span>
+                    <span>امتیاز: ${'★'.repeat(currentRating)}${'☆'.repeat(5-currentRating)}</span>
+                </div>
+                <p>${comment}</p>
+                <div style="color: #888; font-size: 0.8em; margin-top: 10px;">
+                    ${new Date().toLocaleDateString('fa-IR')}
+                </div>
+            `;
+            
+            commentsList.prepend(newComment);
+            textarea.value = '';
+            rateGame(0);
+            alert('نظر شما با موفقیت ثبت شد!');
+        }
+
+        // گالری تصاویر - مودال
+        function openModal(img) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'block';
+            modalImg.src = img.src;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // تماس تلفنی
+        function callNumber() {
+            alert('در حال اتصال به: ۰۹۰۱۱۴۳۳۹۴۰\n(این یک دمو است - در نسخه واقعی تماس گرفته می‌شود)');
+        }
+
+        function sendSMS() {
+            alert('ارسال پیامک به: ۰۹۰۱۱۴۳۳۹۴۰\n(این یک دمو است - در نسخه واقعی پیامک ارسال می‌شود)');
+        }
+
+        // افکت تایپ برای عنوان اصلی
+        const heroTitle = document.querySelector('.hero-content h1');
+        const originalText = heroTitle.textContent;
+        heroTitle.textContent = '';
+        
+        let i = 0;
+        function typeWriter() {
+            if (i < originalText.length) {
+                heroTitle.textContent += originalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        
+        // شروع تایپ پس از لود صفحه
+        setTimeout(typeWriter, 1000);
+
+        // تغییر رنگ زمینه داینامیک
+        const colors = [
+            'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+            'linear-gradient(135deg, #2d1b2e 0%, #1e1e2e 100%)',
+            'linear-gradient(135deg, #1b2d32 0%, #1e1e2e 100%)',
+            'linear-gradient(135deg, #2d2b1b 0%, #1e1e2e 100%)'
+        ];
+        
+        let currentColor = 0;
+        setInterval(() => {
+            document.body.style.background = colors[currentColor];
+            currentColor = (currentColor + 1) % colors.length;
+        }, 10000);
+    </script>
+</body>
+</html>
